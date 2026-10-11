@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Lagun271.RobotStudio.PcSdk.Ref</PackageId>
+    <Description>Compile-time reference assemblies for the ABB PC SDK (ABB.Robotics.Controllers.PC) as shipped with the RobotStudio SDK. Not redistributable; private feed only. RobotStudio provides these assemblies at runtime.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)ABB.Robotics.Controllers.PC.dll" />
+  </ItemGroup>
+</Project>

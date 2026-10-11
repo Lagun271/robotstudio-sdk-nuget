@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <RspakToolPath Condition="'$(RspakToolPath)' == ''">$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\tools\RspakTool.exe'))</RspakToolPath>
+  </PropertyGroup>
+</Project>

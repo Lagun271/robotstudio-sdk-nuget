@@ -1,0 +1,31 @@
+<Project>
+  <!--
+    Shared settings for the reference-only packages. Each package project collects DLLs from a local
+    RobotStudio installation and packs them under ref/ (compile-time only; RobotStudio provides them at runtime).
+  -->
+  <PropertyGroup>
+    <RobotStudioVersion Condition="'$(RobotStudioVersion)' == ''">2026</RobotStudioVersion>
+    <RobotStudioSdkDir Condition="'$(RobotStudioSdkDir)' == ''">$(MSBuildProgramFiles32)\ABB\SDK\RobotStudio $(RobotStudioVersion) SDK\</RobotStudioSdkDir>
+    <RobotStudioBinDir Condition="'$(RobotStudioBinDir)' == ''">$(MSBuildProgramFiles32)\ABB\RobotStudio $(RobotStudioVersion)\Bin\</RobotStudioBinDir>
+
+    <TargetFramework>net10.0</TargetFramework>
+    <RefTargetFramework>net10.0</RefTargetFramework>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IsPackable>true</IsPackable>
+    <!-- NU5128: ref/ without matching lib/ is intentional for compile-only packages. -->
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+
+    <Authors>Lagun271</Authors>
+    <Company>Lagun271</Company>
+    <PackageTags>RobotStudio;ABB;reference-assemblies</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Lagun271/robotstudio-sdk-nuget</RepositoryUrl>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)artifacts\nuget\</PackageOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>

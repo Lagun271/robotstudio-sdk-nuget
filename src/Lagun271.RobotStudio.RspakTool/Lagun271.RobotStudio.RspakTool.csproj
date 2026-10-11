@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Lagun271.RobotStudio.RspakTool</PackageId>
+    <Description>RobotStudio distribution package tool (RspakTool.exe) from the ABB RobotStudio SDK, for building .rspak files. Defines the MSBuild property RspakToolPath. Not redistributable; private feed only. Requires the .NET 10 runtime.</Description>
+    <DevelopmentDependency>true</DevelopmentDependency>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)RspakTool.exe" PackageFolder="tools\" />
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)RspakTool.dll" PackageFolder="tools\" />
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)RspakTool.runtimeconfig.json" PackageFolder="tools\" />
+    <!-- RspakTool dependency; Microsoft-versioned, not tied to the RobotStudio build. -->
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)Microsoft.Extensions.FileSystemGlobbing.dll" PackageFolder="tools\" SkipBuildCheck="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="build\$(PackageId).props" Pack="true" PackagePath="build\" />
+  </ItemGroup>
+</Project>

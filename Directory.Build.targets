@@ -1,0 +1,42 @@
+<Project>
+  <!--
+    Collect the listed RobotStudio files into the package before NuGet gathers package files.
+    RobotStudioRefAssembly metadata:
+      PackageFolder  - package folder (default ref\$(RefTargetFramework)\)
+      SkipBuildCheck - true for third-party files that are not versioned with RobotStudio
+  -->
+  <Target Name="ResolveRobotStudioRefAssemblies" BeforeTargets="_GetPackageFiles">
+    <Error Condition="'$(PackageVersion)' == '' or '$(PackageVersion)' == '1.0.0'"
+           Text="Pass the RobotStudio build version, for example -p:PackageVersion=26.3.11794 (scripts/pack.ps1 does this)." />
+    <Error Condition="'@(RobotStudioRefAssembly)' == ''" Text="No RobotStudioRefAssembly items defined in $(MSBuildProjectFile)." />
+    <Error Condition="!Exists('%(RobotStudioRefAssembly.FullPath)')"
+           Text="Missing %(RobotStudioRefAssembly.FullPath). Install RobotStudio $(RobotStudioVersion) and its SDK, or pass -p:RobotStudioSdkDir=... / -p:RobotStudioBinDir=...." />
+
+    <!-- All managed RobotStudio assemblies (.dll; RspakTool.exe is a native host) in a package must come from the same RobotStudio build as the package version. -->
+    <ItemGroup>
+      <_RobotStudioVersionedAssembly Include="@(RobotStudioRefAssembly)"
+                                     Condition="'%(RobotStudioRefAssembly.SkipBuildCheck)' != 'true' and '%(Extension)' == '.dll'" />
+    </ItemGroup>
+    <GetAssemblyIdentity AssemblyFiles="@(_RobotStudioVersionedAssembly)">
+      <Output TaskParameter="Assemblies" ItemName="_RobotStudioRefIdentity" />
+    </GetAssemblyIdentity>
+    <ItemGroup>
+      <_RobotStudioRefBuildMismatch Include="@(_RobotStudioRefIdentity)"
+                                    Condition="'$([System.Version]::Parse(%(Version)).ToString(3))' != '$(PackageVersion)'" />
+    </ItemGroup>
+    <Error Condition="'@(_RobotStudioRefBuildMismatch)' != ''"
+           Text="Assembly build differs from package version $(PackageVersion): @(_RobotStudioRefBuildMismatch->'%(Identity)', '; ')" />
+
+    <ItemGroup>
+      <RobotStudioRefAssembly Update="@(RobotStudioRefAssembly)" Condition="'%(RobotStudioRefAssembly.PackageFolder)' == ''">
+        <PackageFolder>ref\$(RefTargetFramework)\</PackageFolder>
+      </RobotStudioRefAssembly>
+      <None Include="@(RobotStudioRefAssembly)" Pack="true" PackagePath="%(RobotStudioRefAssembly.PackageFolder)" />
+      <_RobotStudioRefXmlDoc Include="@(RobotStudioRefAssembly->'%(RootDir)%(Directory)%(Filename).xml')"
+                             Condition="'%(Extension)' == '.dll' and Exists('%(RootDir)%(Directory)%(Filename).xml')" />
+      <None Include="@(_RobotStudioRefXmlDoc)" Pack="true" PackagePath="%(_RobotStudioRefXmlDoc.PackageFolder)" />
+    </ItemGroup>
+
+    <Message Importance="high" Text="$(PackageId) $(PackageVersion): @(RobotStudioRefAssembly->'%(Filename)%(Extension)', ', ')" />
+  </Target>
+</Project>

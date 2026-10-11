@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Lagun271.RobotStudio.Sdk.Ref</PackageId>
+    <Description>Compile-time reference assemblies from the ABB RobotStudio SDK (ABB.Robotics.RobotStudio.*, ABB.Robotics.Math). Not redistributable; private feed only. RobotStudio provides these assemblies at runtime.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)ABB.Robotics.Math.dll" />
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)ABB.Robotics.RobotStudio.dll" />
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)ABB.Robotics.RobotStudio.Controllers.dll" />
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)ABB.Robotics.RobotStudio.Documents.dll" />
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)ABB.Robotics.RobotStudio.Environment.dll" />
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)ABB.Robotics.RobotStudio.Stations.dll" />
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)ABB.Robotics.RobotStudio.Stations.Forms.dll" />
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)ABB.Robotics.RobotStudio.UI.dll" />
+  </ItemGroup>
+</Project>

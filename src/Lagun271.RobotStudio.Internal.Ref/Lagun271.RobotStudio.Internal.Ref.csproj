@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Lagun271.RobotStudio.Internal.Ref</PackageId>
+    <Description>Compile-time references to RobotStudio assemblies that are not part of the public SDK but are used by add-ins (internal, unsupported APIs). Not redistributable; private feed only. RobotStudio provides these assemblies at runtime.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- ABBInternal.FileCommands (for example FileCommandServices.CreateStation). -->
+    <RobotStudioRefAssembly Include="$(RobotStudioBinDir)StationManagement.dll" />
+  </ItemGroup>
+</Project>
