@@ -9,6 +9,8 @@
     <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)RspakTool.exe" PackageFolder="tools\" />
     <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)RspakTool.dll" PackageFolder="tools\" />
     <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)RspakTool.runtimeconfig.json" PackageFolder="tools\" />
+    <!-- Schemas RspakTool validates .rspakspec and .rsaddin files against; it loads them from its own directory. -->
+    <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)*.xsd" PackageFolder="tools\" />
     <!-- RspakTool dependency; Microsoft-versioned, not tied to the RobotStudio build. -->
     <RobotStudioRefAssembly Include="$(RobotStudioSdkDir)Microsoft.Extensions.FileSystemGlobbing.dll" PackageFolder="tools\" SkipBuildCheck="true" />
   </ItemGroup>
