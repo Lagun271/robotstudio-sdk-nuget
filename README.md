@@ -23,10 +23,7 @@ Not packed from the SDK folder: `RspakTool.dll` (packaging tool), `RobotStudio.R
 ABB licenses the RobotStudio SDK under BSD-3-Clause (full text and copyright notice in
 [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md), as
 [published by ABB](https://developercenter.robotstudio.com/api/robotstudio/articles/Introduction/License-Agreement.html)),
-which permits redistribution in binary form. These packages contain compile-time reference
-assemblies only — trimmed to public type/member signatures, with implementation bodies stripped.
-This repository's source never commits the DLLs; the published nuget.org packages do contain
-these trimmed reference assemblies, built locally from an installed RobotStudio SDK.
+which permits redistribution in binary form.
 
 ABB and RobotStudio are trademarks of ABB. This project is not affiliated with or endorsed by ABB.
 
