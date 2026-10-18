@@ -6,7 +6,10 @@ Compile-time reference packages for ABB RobotStudio add-in projects, built from 
 |---|---|---|
 | `Lagun271.RobotStudio.Sdk.Ref` | `ABB.Robotics.Math`, `ABB.Robotics.RobotStudio`, `.Controllers`, `.Documents`, `.Environment`, `.Stations`, `.Stations.Forms`, `.UI` | `ABB\SDK\RobotStudio <ver> SDK` |
 | `Lagun271.RobotStudio.PcSdk.Ref` | `ABB.Robotics.Controllers.PC` | `ABB\SDK\RobotStudio <ver> SDK` |
-| `Lagun271.RobotStudio.Internal.Ref` | `StationManagement` (`ABBInternal.*`, not public SDK) | `ABB\RobotStudio <ver>\Bin` |
+
+Only packages taken from ABB's published SDK folder are packed here. `StationManagement.dll`
+(`ABBInternal.*`, taken from RobotStudio's `Bin` folder rather than the SDK folder) is
+**not** part of the public SDK and is not packaged or redistributed by this repo.
 
 Assemblies are packed under `ref/net10.0/` only: projects compile against them, nothing is copied to the add-in
 output, and RobotStudio supplies the real assemblies at runtime. The package version is the RobotStudio build
