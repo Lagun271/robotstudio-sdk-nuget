@@ -1,17 +1,18 @@
 <#
 .SYNOPSIS
-  Pushes the packed .nupkg files to the private GitHub Packages NuGet feed.
+  Pushes the packed .nupkg files to nuget.org.
 
 .DESCRIPTION
-  Uses the GitHub CLI token (gh auth token), which needs the write:packages scope:
-    gh auth refresh -h github.com -s write:packages,read:packages
-  Existing versions are skipped (--skip-duplicate); bump RobotStudio or delete the version on GitHub to republish.
+  Needs a nuget.org API key with push rights for the Lagun271.* package IDs, either passed via
+  -ApiKey or set in the NUGET_API_KEY environment variable. Existing versions are skipped
+  (--skip-duplicate); bump RobotStudio or unlist/delete the version on nuget.org to republish.
 
 .EXAMPLE
   ./scripts/pack.ps1; ./scripts/push.ps1
 #>
 param(
-    [string]$Owner = 'Lagun271',
+    [string]$ApiKey = $env:NUGET_API_KEY,
+    [string]$Source = 'https://api.nuget.org/v3/index.json',
     [string]$Dotnet = 'dotnet.exe'
 )
 
@@ -23,13 +24,11 @@ if ($packages.Count -eq 0) {
     throw "No packages in $outDir. Run ./scripts/pack.ps1 first."
 }
 
-$token = (& gh auth token).Trim()
-if (-not $token) { throw 'No GitHub CLI token. Run: gh auth login' }
+if (-not $ApiKey) { throw 'No nuget.org API key. Pass -ApiKey or set $env:NUGET_API_KEY.' }
 
-$source = "https://nuget.pkg.github.com/$Owner/index.json"
 foreach ($package in $packages) {
-    & $Dotnet nuget push $package.FullName --source $source --api-key $token --skip-duplicate
+    & $Dotnet nuget push $package.FullName --source $Source --api-key $ApiKey --skip-duplicate
     if ($LASTEXITCODE -ne 0) {
-        throw "Push failed for $($package.Name). Check that the gh token has write:packages."
+        throw "Push failed for $($package.Name)."
     }
 }

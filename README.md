@@ -17,39 +17,32 @@ Not packed from the SDK folder: `RspakTool.dll` (packaging tool), `RobotStudio.R
 
 ## Licensing
 
-The packaged DLLs are ABB property and are not redistributable. Publish only to the private
-`nuget.pkg.github.com/Lagun271` feed and keep this repository private. The repository never contains the DLLs;
-packages are built locally from an installed RobotStudio.
+<!-- TODO: confirm exact redistribution-terms wording with the maintainer before relying on this. -->
+These packages contain compile-time reference assemblies only — trimmed to public type/member
+signatures, with implementation bodies stripped. No ABB RobotStudio implementation code is
+distributed; RobotStudio supplies the real assemblies at runtime. The repository never contains
+the DLLs; packages are built locally from an installed RobotStudio.
+
+ABB and RobotStudio are trademarks of ABB. This project is not affiliated with or endorsed by ABB.
 
 ## Pack and push
 
-Requires RobotStudio and the RobotStudio SDK installed, and a GitHub CLI token with package scopes:
+Requires RobotStudio and the RobotStudio SDK installed, and a nuget.org API key with push rights
+for the `Lagun271.*` package IDs:
 
 ```powershell
-gh auth refresh -h github.com -s write:packages,read:packages
-./scripts/pack.ps1            # -> artifacts/nuget/*.nupkg
-./scripts/push.ps1            # -> https://nuget.pkg.github.com/Lagun271/index.json
+./scripts/pack.ps1                              # -> artifacts/nuget/*.nupkg
+./scripts/push.ps1 -ApiKey <nuget.org API key>   # -> https://api.nuget.org
 ```
 
 ## Consume
 
-`NuGet.Config` in the consuming repo:
+Plain nuget.org packages — no custom source, no credentials:
 
 ```xml
 <packageSources>
   <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
-  <add key="lagun271" value="https://nuget.pkg.github.com/Lagun271/index.json" />
 </packageSources>
-<packageSourceMapping>
-  <packageSource key="nuget.org"><package pattern="*" /></packageSource>
-  <packageSource key="lagun271"><package pattern="Lagun271.*" /></packageSource>
-</packageSourceMapping>
-```
-
-Restore needs credentials for the `lagun271` source (a token with `read:packages`), for example:
-
-```powershell
-dotnet nuget update source lagun271 --username <github-user> --password (gh auth token) --store-password-in-clear-text --configfile $env:APPDATA\NuGet\NuGet.Config
 ```
 
 Project reference (compile-only; nothing is copied to the output):
