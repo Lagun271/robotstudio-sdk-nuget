@@ -27,6 +27,9 @@ the DLLs; packages are built locally from an installed RobotStudio.
 
 ABB and RobotStudio are trademarks of ABB. This project is not affiliated with or endorsed by ABB.
 
+The above is specifically about the packaged reference assemblies. This repo's own code (project
+files, build scripts) is licensed under MIT — see [`LICENSE`](LICENSE).
+
 ## Pack and push
 
 Requires RobotStudio and the RobotStudio SDK installed, and a nuget.org API key with push rights
