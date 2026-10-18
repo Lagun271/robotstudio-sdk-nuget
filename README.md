@@ -17,7 +17,6 @@ Not packed from the SDK folder: `RspakTool.dll` (packaging tool), `RobotStudio.R
 
 ## Licensing
 
-<!-- TODO: confirm exact redistribution-terms wording with the maintainer before relying on this. -->
 These packages contain compile-time reference assemblies only — trimmed to public type/member
 signatures, with implementation bodies stripped. No ABB RobotStudio implementation code is
 distributed; RobotStudio supplies the real assemblies at runtime. The repository never contains
